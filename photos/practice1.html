@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function fun()
+        {
+        let physics= parseInt(document.getElementById("tx1").value);
+        let chemistry= parseInt(document.getElementById("tx2").value);
+        let maths= parseInt(document.getElementById("tx3").value);
+        let english= parseInt(document.getElementById("tx4").value);
+        let hindi= parseInt(document.getElementById("tx5").value);
+
+        let total = physics+chemistry+hindi+maths+english;
+        let per = total/5;
+        document.getElementById("demo").innerHTML="calculate percentage is ="+per;
+        }
+
+    </script>
+</head>
+<body>
+    <pre>
+        enter physics marks :-   <input type="text" id="tx1">
+        enter chemistry marks :- <input type="text" id="tx2">
+        enter maths marks :-     <input type="text" id="tx3">
+        enter english marks :-   <input type="text" id="tx4">
+        enter hindi marks :-     <input type="text" id="tx5">
+
+        <input type="button" value="click here" onclick="fun()" >
+        <p id="demo"></p>
+    </pre>
+</body>
+</html>

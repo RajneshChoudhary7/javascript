@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heart Disease Risk Assessment</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+        body {
+            background-color: #ffffff;
+            font-family: 'Inter', sans-serif;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+    
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+    
+        a {
+            text-decoration: none;
+            color: #3498db;
+            transition: color 0.3s ease;
+        }
+    
+        a:hover {
+            color: #2980b9;
+        }
+    
+
+        .navbar {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 1rem 0;
+        }
+    
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff !important;
+        }
+    
+        .navbar-nav .nav-link {
+            color: #fff !important;
+            font-weight: 500;
+            margin-left: 1rem;
+            transition: opacity 0.3s ease;
+        }
+    
+        .navbar-nav .nav-link:hover {
+            opacity: 0.8;
+        }
+
+        .container {
+            margin-top: 2rem;
+            padding: 0 1rem;
+        }
+    
+
+        .card {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background: #fff;
+        }
+    
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+        }
+    
+        .card-body {
+            padding: 2rem;
+        }
+    
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+    
+
+        .btn {
+            border-radius: 8px;
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+    
+        .btn-primary {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            border: none;
+        }
+    
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #2980b9, #3498db);
+        }
+    
+        .btn-secondary {
+            background: #ecf0f1;
+            color: #333;
+            border: none;
+        }
+    
+        .btn-secondary:hover {
+            background: #bdc3c7;
+        }
+    
+        .form-control {
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            padding: 0.75rem;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+    
+        .form-control:focus {
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+    
+
+        .chart-container {
+            max-width: 800px;
+            margin: auto;
+            padding: 1rem;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+    
+
+        footer {
+            background: #2c3e50;
+            color: #fff;
+            padding: 2rem 0;
+            margin-top: 4rem;
+            text-align: center;
+        }
+    
+        footer a {
+            color: #3498db;
+        }
+    
+        footer a:hover {
+            color: #2980b9;
+        }
+    
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    
+        .fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+    
+
+        @media (max-width: 768px) {
+            .navbar-brand {
+                font-size: 1.25rem;
+            }
+    
+            .card-body {
+                padding: 1.5rem;
+            }
+    
+            .chart-container {
+                padding: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="#">Heart Disease Risk Assessment</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#dashboard">Doctor Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#profile">User Profile</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#wearable">Wearable Data</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#Health condition ">Health condition</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#Health Products">Health Products</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-6">
+                <h2>Enter Health Data</h2>
+                <form id="healthForm">
+                    <div class="mb-3">
+                        <label for="age" class="form-label">Age</label>
+                        <input type="number" class="form-control" id="age" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="bmi" class="form-label">BMI</label>
+                        <input type="number" class="form-control" id="bmi" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="cholesterol" class="form-label">Cholesterol Level</label>
+                        <input type="number" class="form-control" id="cholesterol" required>
+                    </div>
+                    <button type="button" class="btn btn-primary" onclick="assessRisk()">Submit</button>
+                </form>
+            </div>
+            <div class="col-md-6">
+                <h2>Risk Prediction</h2>
+                <div id="result" class="alert alert-info">Your risk assessment will appear here.</div>
+                <div class="chart-container">
+                    <canvas id="riskChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div id="dashboard" class="mt-5">
+            <h2>Doctor Dashboard</h2>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Patient Overview</h5>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Age</th>
+                                <th>BMI</th>
+                                <th>Cholesterol</th>
+                                <th>Risk Level</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="patientData">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">AI Insights</h5>
+                    <p id="aiInsights">AI-generated insights will appear here.</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="profile" class="mt-5">
+            <h2>User Profile</h2>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Personal Information</h5>
+                    <p>Name: <span id="userName">John Doe</span></p>
+                    <p>Email: <span id="userEmail">john.doe@example.com</span></p>
+                    <button class="btn btn-secondary" onclick="editProfile()">Edit Profile</button>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Health Metrics History</h5>
+                    <canvas id="healthHistoryChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+
+        <div id="wearable" class="mt-5">
+            <h2>Wearable Device Data</h2>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Sync Data</h5>
+                    <button class="btn btn-primary" onclick="syncWearableData()">Sync Wearable Data</button>
+                    <div id="wearableData" class="mt-3">
+                        <canvas id="wearableChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+ 
+        function assessRisk() {
+            let age = document.getElementById("age").value;
+            let bmi = document.getElementById("bmi").value;
+            let cholesterol = document.getElementById("cholesterol").value;
+
+            if (age && bmi && cholesterol) {
+                let riskScore = (parseInt(age) * 0.2) + (parseFloat(bmi) * 0.3) + (parseFloat(cholesterol) * 0.5);
+                let riskLevel = riskScore > 50 ? "High" : riskScore > 30 ? "Medium" : "Low";
+                document.getElementById("result").textContent = `Predicted Risk Level: ${riskLevel}`;
+
+      
+                let ctx = document.getElementById('riskChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Low', 'Medium', 'High'],
+                        datasets: [{
+                            data: [riskScore < 30 ? 100 : 0, (riskScore >= 30 && riskScore <= 50) ? 100 : 0, riskScore > 50 ? 100 : 0],
+                            backgroundColor: ['green', 'yellow', 'red']
+                        }]
+                    }
+                });
+
+                let patientRow = `<tr><td>John Doe</td><td>${age}</td><td>${bmi}</td><td>${cholesterol}</td><td>${riskLevel}</td><td><button class="btn btn-sm btn-info">View Details</button></td></tr>`;
+                document.getElementById("patientData").innerHTML += patientRow;
+            } else {
+                document.getElementById("result").textContent = "Please fill all fields.";
+            }
+        }
+
+        function syncWearableData() {
+            axios.get('https://api.example.com/wearable-data')
+                .then(response => {
+                    let data = response.data;
+                    let ctx = document.getElementById('wearableChart').getContext('2d');
+                    new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: data.labels,
+                            datasets: [{
+                                label: 'Heart Rate',
+                                data: data.heartRate,
+                                borderColor: 'red',
+                                fill: false
+                            }]
+                        }
+                    });
+                })
+                .catch(error => {
+                    console.error("Error fetching wearable data:", error);
+                });
+        }
+
+        function editProfile() {
+            let newName = prompt("Enter new name:");
+            let newEmail = prompt("Enter new email:");
+            if (newName) document.getElementById("userName").textContent = newName;
+            if (newEmail) document.getElementById("userEmail").textContent = newEmail;
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

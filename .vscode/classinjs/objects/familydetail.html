@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Family Details</title>
+  <style>
+    table {
+      width: 80%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      border: 1px solid #444;
+      padding: 10px;
+      text-align: center;
+    }
+    th {
+      background-color: #f0f0f0;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Family Member Details</h2>
+  <div id="demo"></div>
+
+  <script>
+    // Constructor function
+    function Person(first, last, age, eye) {
+      this.firstname = first;
+      this.lastname = last;
+      this.age = age;
+      this.eye = eye;
+    }
+
+    // Creating objects
+    const Myfather = new Person("Rajnesh", "Choudhary", 23, "Red");
+    const myFather = new Person("John", "Doe", 50, "Blue");
+    const myMother = new Person("Sally", "Rally", 48, "Green");
+    const mySister = new Person("Anna", "Rally", 18, "Green");
+    const mySelf = new Person("Johnny", "Rally", 22, "Green");
+
+    // Store all members in an array
+    const family = [Myfather, myFather, myMother, mySister, mySelf];
+
+    // Build the HTML table
+    let table = "<table>";
+    table += "<tr><th>First Name</th><th>Last Name</th><th>Age</th><th>Eye Color</th></tr>";
+
+    for (let member of family) {
+      table += "<tr>";
+      table += "<td>" + member.firstname + "</td>";
+      table += "<td>" + member.lastname + "</td>";
+      table += "<td>" + member.age + "</td>";
+      table += "<td>" + member.eye + "</td>";
+      table += "</tr>";
+    }
+
+    table += "</table>";
+
+    // Display the table
+    document.getElementById("demo").innerHTML = table;
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Late Fee Calculator</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background: url('https://source.unsplash.com/1600x900/?office,corporate') no-repeat center center;
+            background-size: cover;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        
+        .calculator-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 10px;
+            width: 400px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="calculator-card shadow-lg p-4">
+            <h2 class="text-center">📅 Late Fee Calculator</h2>
+            <p class="text-center text-muted">Check your late fee based on the number of days</p>
+            
+            <label for="lateDays" class="form-label">Enter Late Days:</label>
+            <input type="number" id="lateDays" class="form-control" placeholder="Enter number of late days" required>
+            <button class="btn btn-primary w-100 mt-3" onclick="calculateFee()">Calculate</button>
+            
+            <div id="output" class="mt-4">
+                <h4 class="text-center">📋 Fee Details</h4>
+                <ul class="list-group">
+                    <li class="list-group-item"><strong>Late Days:</strong> <span id="days">0</span></li>
+                    <li class="list-group-item"><strong>Charge Per Day:</strong> ₹<span id="chargePerDay">0</span></li>
+                    <li class="list-group-item text-danger"><strong>Total Fine:</strong> ₹<span id="totalFine">0</span></li>
+                    <li class="list-group-item text-warning"><strong>Membership Status:</strong> <span id="membershipStatus">Active</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+
+        function calculateFee() {
+            let lateDays = parseInt(document.getElementById("lateDays").value);
+            
+            if (isNaN(lateDays) || lateDays < 0) {
+                alert("Please enter a valid number of late days!");
+                return;
+            }
+        
+            let chargePerDay = 0;
+            let totalFine = 0;
+            let membershipStatus = "Active";
+        
+            if (lateDays >= 1 && lateDays <= 5) {
+                chargePerDay = 0.5;
+            } else if (lateDays >= 6 && lateDays <= 10) {
+                    
+                chargePerDay = (lateDays*1);
+            } else if (lateDays >= 11 && lateDays <= 30) {
+                chargePerDay = 5;
+            } else if (lateDays > 30) {
+                chargePerDay = 0;
+                totalFine = "All 30 days fine applied";
+                membershipStatus = "❌ Membership Closed";
+                document.getElementById("days").innerText = lateDays;
+                document.getElementById("chargePerDay").innerText = "-";
+                document.getElementById("totalFine").innerText = totalFine;
+                document.getElementById("membershipStatus").innerText = membershipStatus;
+                return;
+            }
+        
+            totalFine = chargePerDay * lateDays;
+        
+            document.getElementById("days").innerText = lateDays;
+            document.getElementById("chargePerDay").innerText = chargePerDay;
+            document.getElementById("totalFine").innerText = totalFine;
+            document.getElementById("membershipStatus").innerText = membershipStatus;
+        }
+        
+    </script>
+</body>
+</html>

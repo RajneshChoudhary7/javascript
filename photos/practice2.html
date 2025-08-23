@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        p{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <p id="demo"></p>
+    <p id="demo1"></p>
+    <p id="demo2"></p>
+    <p id="demo3"></p>
+    <p id="demo4"></p>
+    <script>
+        const dept ={
+            deptno:10,
+            deptname:"king",
+            address:"jabalpur",
+            phone:234435654645,
+            des:function()
+            {
+                let ans="dept no ="+this.deptno+ "<br>  Name ="+this.deptname+"<br> address ="+this.address+"<br> phone ="+this.phone;
+                return(ans);
+            }
+                    };
+                    document.getElementById("demo").innerHTML =dept.des();
+
+
+    </script>
+    <script>
+        const car = {type:"BMW", model:"s800",color:"white"};
+        document.getElementById("demo").innerHTML="tha car type is "+car.type;
+        document.getElementById("demo1").innerHTML="tha car model is "+car.model;
+        document.getElementById("demo2").innerHTML="tha car colour is "+car.color;
+    </script>
+
+
+    <script>
+        const person = new Object;
+        person.firstname ="rajnesh"
+        person.lastname = "choudhary"
+        person.age = 20;
+        person.professon ="developer";
+
+
+        document.getElementById("demo3").innerHTML= person.firstname + " "+ person.lastname + " is "+ person.age + " year old.";
+    </script>
+    <script>
+        const person={
+            firstname: "rajnesh",
+            lastname:"king",
+            id: 5533,
+            fullname: function()
+            {
+                return this.firstname+ " "+ this.lastname;
+            }
+        };
+        document.getElementById("demo").innerHTML = person.fullname();
+    </script>
+    
+</body>
+</html>

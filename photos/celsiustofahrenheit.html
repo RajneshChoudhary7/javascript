@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p id="demo"></p>
+    <script>
+        function person(name ,age,sal ,dept)
+        {
+            this.Name=name;
+            this.Age=age;
+            this.Salary=sal;
+            this.Deptname=dept;
+            this.Live="Newziland";
+           
+        }
+        person.prototype.Msg=function()
+        {
+            return("<br> ! hi this is rajnesh king");
+        }
+
+
+        const Rajnesh = new person("rajnesh choudhary",19,50000,"rajneshdept");
+
+        document.getElementById("demo").innerHTML="Name = "+Rajnesh.Name+"<br>";
+        document.getElementById("demo").innerHTML+="age = "+Rajnesh.Age+"<br>";
+        document.getElementById("demo").innerHTML+="salary = "+Rajnesh.Salary+"<br>";
+        document.getElementById("demo").innerHTML+="depertment name  = "+Rajnesh.Deptname+"<br>";
+        document.getElementById("demo").innerHTML+="leave from = "+Rajnesh.Live +"<br>";
+        document.getElementById("demo").innerHTML+="message = "+ Rajnesh.Msg()+"<br>";
+        
+    </script>
+</body>
+</html>

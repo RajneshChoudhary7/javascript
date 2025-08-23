@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button id="btn">Click me! </button>
+
+    <script>
+        function sayhi(){
+            alert("hi there !");
+        }
+        document.getElementById("btn").addEventListener("click",sayhi);
+    </script>
+    <div id="demo1"></div>
+    <div id="demo2"></div>
+    <script>
+        document.getElementById("demo1").innerHTML="<b> hello world </b>";
+        document.getElementById("demo2").innerText="<b> hello world </b>";
+    </script>
+
+    
+</body>
+</html>

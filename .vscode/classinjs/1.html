@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p id="demo"></p>
+    <script>
+        class Student
+        {
+            constructor(rollno,name,address)
+            {
+                this.rollno=rollno;
+                this.name=name;
+                this.address=address;
+            }
+            getroll(){
+                return(this.rollno);
+            }
+            getname(){
+                return(this.name);
+            }
+            getaddress(){
+                return(this.address);
+            }
+
+            
+
+        }
+        class Teacher extends Student
+        {
+            constructor(tname , sub ,rollno,name,address)
+            {
+                super(rollno,name,address)
+                this.TeacherName=tname;
+                this.Subject=sub;
+            }
+            gettname()
+            {
+                return(this.TeacherName);
+            }
+            getsubject()
+            {
+                return(this.Subject);
+            }
+        }
+        let obj = new Teacher("rajnesh","computer Science",101,"abhi","jabalpur");
+        document.getElementById("demo").innerHTML="rollno = "+obj.getroll()+"<br>";
+                document.getElementById("demo").innerHTML+="name = "+obj.getname()+"<br>"
+                        document.getElementById("demo").innerHTML+="address = "+obj.getaddress()+"<br>";
+                        document.getElementById("demo").innerHTML+="teacher name = "+obj.gettname()+"<br>";
+                        document.getElementById("demo").innerHTML+="subject = "+obj.getsubject()+"<br>";
+
+    </script>
+</body>
+</html>
