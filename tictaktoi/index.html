@@ -1,38 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tic-Tac-Toe</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tic-Tac-Toe</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  
+  <!-- Header -->
+  <header>
+    <h1 class="title">🎮 Tic-Tac-Toe</h1>
+    <p class="subtitle">Player O vs Player X</p>
+  </header>
 
-    <div class="msg-container hide">
-        <p id="msg">Winner</p>
-        <button class="new-game">New Game</button>
+  <!-- Winner Message -->
+  <div class="msg-container hide">
+    <p id="msg">Winner</p>
+    <button class="new-game">New Game</button>
+  </div>
+
+  <!-- Game Area -->
+  <main>
+    <div class="container">
+      <div class="game">
+        <button class="box"></button>
+        <button class="box"></button>
+        <button class="box"></button>
+        <button class="box"></button>
+        <button class="box"></button>
+        <button class="box"></button>
+        <button class="box"></button>
+        <button class="box"></button>
+        <button class="box"></button>
+      </div>
     </div>
 
-    <main>   
-         <h1>Tic-Tac-Toe</h1>
-        <div class="container">
-            <div class="game">
-                <button class="box"></button>
-                <button class="box"></button>
-                <button class="box"></button>
-                <button class="box"></button>
-                <button class="box"></button>
-                <button class="box"></button>
-                <button class="box"></button>
-                <button class="box"></button>
-                <button class="box"></button>
-            </div>
-        </div>
+    <!-- Reset Button -->
+    <div class="controls">
+      <button class="reset">🔄 Reset</button>
+    </div>
+  </main>
 
-        <button class="reset">Reset Button</button>
-    </main>
+  <!-- Footer -->
+  <footer>
+    <p>✨ Made with ❤️ for Fun | Tic-Tac-Toe ✨</p>
+  </footer>
 
-
-<script src="app.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
