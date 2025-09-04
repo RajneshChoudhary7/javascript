@@ -434,17 +434,252 @@
 // }
 // let b = outer()
 // b()
-for(var i=1;i<6;i++)
-{
+// for(var i=1;i<6;i++)
+// {
+//     setTimeout(() => {
+//         console.log(i)
+//     }, 1000*i);
+// }
+
+
+// for(let i=1;i<6;i++)
+// {
+//     setTimeout(() => {
+//         console.log(i)
+//     }, 10000*i);
+
+
+
+// }
+
+
+// a=5
+// console.log(a)
+// console.log(window)
+// console.log(this)
+// console.log(this==window)
+
+// let obj ={
+//     id:1,
+//     name:"Rajnesh",
+//     sum:()=>{
+//         console.log(this)
+//     }
+// }
+// obj.sum()
+// a=5
+// let obj ={
+//     id:1,
+//     a:10,
+//     name:"Rajnesh",
+//     sum:()=>{
+//         console.log(this.a)
+//     }
+// }
+// obj.sum()
+
+
+
+// a=5
+// let obj ={
+//     id:1,
+//     a:10,
+//     name:"Rajnesh",
+//     sum(){
+//         console.log(this.a)
+//     }
+// }
+// obj.sum()
+
+// let obj = {
+//     id: 1,
+//     a: 10,
+//     name: "Rajnesh",
+//     sum: () => {
+//         console.log(this.a);
+//     }
+// }
+// console.log(obj.toString())
+
+// let person = {
+//   name: "Rajnesh"
+// };
+
+// console.log(person.toString()); 
+
+// let arr = [2,3,234,234,2]
+// console.log(Array.prototype)
+// console.log(String.prototype)
+
+
+// arr.map((a,b,c)=>{
+//     console.log(a)
+// })
+// this is a actual code of map function 
+
+// arr = [12,23,345,234,234]
+
+// Array.prototype.rajnesh= function(callback){
+//     let res =[]
+//     for(let i =0;i<this.length;i++){
+//         res.push(callback(this[i],i,this))
+
+//     }
+//     return res
+        
+// }
+
+// let data = arr.rajnesh((a,b,c)=>{
+//     return a
+// })
+// console.log(data)
+
+
+///////////////////
+
+/// this is a actual code of filter function 
+
+// arr = [12,23,345,234,234]
+
+// let data = arr.filter((a,b,c)=>{
+//     return a%2==0
+// })
+// console.log(data)
+
+
+
+// Array.prototype.rajnesh= function(callback){
+//     let res =[]
+//     for(let i=0;i<this.length;i++){
+
+//         if(callback(this[i],i,this)){
+
+//             res.push((this[i]))
+//         }
+
+//     }
+//     return res
+        
+// }
+
+// let data1 = arr.rajnesh((a,b,c)=>{
+//     return a%2==1
+// })
+// console.log(data1)
+
+
+///////////////////////    
+// synchronized and asynchronized 
+
+// function getData(callback) {
+//   console.log("Fetching data...");
+//   setTimeout(() => {
+//     callback("Data aagaya!");
+//   }, 2000);
+// }
+
+// getData((result) => {
+//   console.log(result);
+// });
+
+// function get(callback){
+//     console.log("data aa raha h ....")
+//     setTimeout(() => {
+//         callback("data aa gya ")
+//     }, 4000);
+// }
+
+// get((result) => {
+//     console.log(result)
+// })
+
+
+// function step1(fn){
+//     setTimeout(() => {
+//         console.log("photo choose ")
+//     }, 5000);
+//     setTimeout(() => {
+//         console.log("filter lagao")
+//     }, 4000);
+//     setTimeout(() => {
+//         console.log("gana lagao")
+//     }, 3000);
+//     setTimeout(() => {
+//         console.log("post ")
+//     }, 1000);
+//     fn()
+// }
+
+// function step2(cb1){
+//     setTimeout(() => {
+//         console.log("filter lagao")
+//     }, 4000);
+// }
+
+
+// step1((result) =>{
+//     console.log(result)
+// })
+
+
+
+
+
+//////////////////////////////
+
+
+// setTimeout(()=>{
+//     console.log("A")
+// }, 1000 )
+
+
+// setTimeout(()=>{
+//     console.log("D")
+// }, 0 )
+
+
+// setTimeout(()=>{
+//     console.log("C")
+// }, 4000 )
+
+// console.log("B")
+
+
+function step1(fn){
     setTimeout(() => {
-        console.log(i)
-    }, 1000*i);
+        console.log("Photo select")
+        fn()
+    },5000)
+}
+
+function step2(fn){
+    setTimeout(() => {
+        console.log("caption")
+        fn()
+    },4000)
+}
+
+function step3(fn){
+    setTimeout(() => {
+        console.log("filter")
+        fn()
+    },3000)
+}
+
+function step4(fn){
+    setTimeout(() => {
+        console.log("Post")
+        fn()
+    },1000)
 }
 
 
-for(let i=1;i<6;i++)
-{
-    setTimeout(() => {
-        console.log(i)
-    }, 10000*i);
-}
+    step1(() =>{
+        step2(() => {
+            step3(() => {
+                step4(() => {
+
+    })
+    })
+    })
+})
