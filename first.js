@@ -645,41 +645,146 @@
 // console.log("B")
 
 
-function step1(fn){
-    setTimeout(() => {
-        console.log("Photo select")
-        fn()
-    },5000)
-}
+// function step1(fn){
+//     setTimeout(() => {
+//         console.log("Photo select")
+//         fn()
+//     },5000)
+// }
 
-function step2(fn){
-    setTimeout(() => {
-        console.log("caption")
-        fn()
-    },4000)
-}
+// function step2(fn){
+//     setTimeout(() => {
+//         console.log("caption")
+//         fn()
+//     },4000)
+// }
 
-function step3(fn){
-    setTimeout(() => {
-        console.log("filter")
-        fn()
-    },3000)
-}
+// function step3(fn){
+//     setTimeout(() => {
+//         console.log("filter")
+//         fn()
+//     },3000)
+// }
 
-function step4(fn){
-    setTimeout(() => {
-        console.log("Post")
-        fn()
-    },1000)
-}
+// function step4(fn){
+//     setTimeout(() => {
+//         console.log("Post")
+//         fn()
+//     },1000)
+// }
 
 
-    step1(() =>{
-        step2(() => {
-            step3(() => {
-                step4(() => {
+//     step1(() =>{
+//         step2(() => {
+//             step3(() => {
+//                 step4(() => {
 
-    })
-    })
-    })
+//     })
+//     })
+//     })
+// })
+
+// const myPromise = new Promise((resolve, reject) => {
+
+//     setTimeout(() => {
+//         resolve("Data mil gaya!");
+//     }, 2000);
+
+//     resolve()
+// });
+
+// myPromise
+//     .then((result) => {
+//         console.log(result);
+//     })
+//     .catch((error) => {
+//         console.log("Error:", error);
+//     });
+
+// let promise = new Promise((resolve,reject)=>{
+
+// })
+
+// promise.then(()=>{
+//     console.log("Me Collage aagya ")
+// })
+
+// .catch(()=>{
+//     console.log("Me collage nahi aaunga ")
+// })
+
+// let step1 = function(){
+//     return new Promise((res,rej)=>{
+//         setTimeout(() => {
+//             res()
+//             console.log("photo select ho gye ")
+//         }, 4000);
+//     })
+// }
+
+// let step2 = function(){
+//     return new Promise((res,rej)=>{
+//         setTimeout(() => {
+//             res()
+//             console.log("Captions ")
+//         }, 3000);
+//     })
+// }
+
+// let step3 = function(){
+//     return new Promise((res,rej)=>{
+//         setTimeout(() => {
+//             res()
+//             console.log("Filter lag gya ")
+//         }, 2000);
+//     })
+// }
+
+// let step4 = function(){
+//     return new Promise((res,rej)=>{
+//         setTimeout(() => {
+//             res()
+//             console.log("Song bhee lag gya ")
+//         }, 3000);
+//     })
+// }
+
+// let step5 = function(){
+//     return new Promise((res,rej)=>{
+//         setTimeout(() => {
+//             res()
+//             console.log("photo Post Ho gye ...! ")
+//             }, 3000);
+//     })
+// }
+
+//         async  function call(){
+//             await step1()
+//             await step2()
+//             await step3()
+//             console.log("hello rajnesh")
+//             await step4()
+//             await step5()
+//         }
+
+//         call()
+
+
+// step1().then(()=>{
+//     return step2().then(()=>{
+//         return step3().then(()=>{
+//             return step4().then(()=>{
+//                 return step5().then(()=>{
+        
+//                 })
+        
+//             })
+//         })
+//     })
+// })
+
+
+let promise = new Promise(()=>{
+    console.log("helllo")
 })
+console.log("h1")
