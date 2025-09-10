@@ -1,4 +1,3 @@
-
 // document.write("hello this i js file ")
 //     console.log('1')
 
@@ -163,7 +162,7 @@
 //  for(let i in arr){
 //     console.log(i)
 //  }
- 
+
 //  for(let i in arr){
 //     console.log(arr[i])
 //  }
@@ -415,7 +414,7 @@
 
 
 // let data2 = arr.filter(a,b){
-    
+
 // }
 
 
@@ -526,7 +525,7 @@
 
 //     }
 //     return res
-        
+
 // }
 
 // let data = arr.rajnesh((a,b,c)=>{
@@ -559,7 +558,7 @@
 
 //     }
 //     return res
-        
+
 // }
 
 // let data1 = arr.rajnesh((a,b,c)=>{
@@ -775,16 +774,84 @@
 //         return step3().then(()=>{
 //             return step4().then(()=>{
 //                 return step5().then(()=>{
-        
+
 //                 })
-        
+
 //             })
 //         })
 //     })
 // })
 
 
-let promise = new Promise(()=>{
-    console.log("helllo")
+// let promise = new Promise(()=>{
+//     console.log("helllo")
+// })
+// console.log("h1")
+
+
+
+// let btn = document.querySelector("button")
+// let h = document.querySelector("h1")
+// let body = document.querySelector("body")
+
+
+// // btn.onclick = function() {
+// //     body.style.backgroundColor = "red"
+
+// // }
+// let inp = document.querySelector("input")
+// inp.addEventListener("input", (e) => {
+//     h.innerText = e.target.value;
+
+
+// })
+
+
+
+// btn.addEventListener("click", () => {
+//     body.style.backgroundColor = "red"
+
+// })
+
+// Get the form and the submit button
+// let form = document.getElementById("registrationForm");
+// let button = document.getElementById("sub");
+
+// // Event listener for the submit button
+// button.addEventListener("click", (e) => {
+//     e.preventDefault(); // Prevent the default form submission
+//     let name = document.getElementById("name").value;
+//     let email = document.getElementById("email").value;
+//     let password = document.getElementById("password").value;
+
+//     console.log("Name:", name);
+//     console.log("Email:", email);
+//     console.log("Password:", password);
+// });
+
+// // Optional: Listen to the form's submit event instead
+// form.addEventListener("submit", (e) => {
+//     e.preventDefault(); // Prevent the form from actually submitting
+//     let name = document.getElementById("name").value;
+//     let email = document.getElementById("email").value;
+//     let password = document.getElementById("password").value;
+
+//     console.log("Form Submit Event:");
+//     console.log("Name:", name);
+//     console.log("Email:", email);
+//     console.log("Password:", password);
+// });
+
+let formEl = document.querySelector("form")
+
+formEl.addEventListener("submit", (e) => {
+    e.preventDefault()
+    let data = {
+        name: formEl[0].value,
+        email: formEl[1].value,
+        password: formEl[2].value
+    };
+    console.log(data);
+    localStorage.setItem("formdata", JSON.stringify(data))
+
 })
-console.log("h1")
