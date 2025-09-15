@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Calculator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .btn-operator {
+            background-color: #f59e0b;
+        }
+        .btn-operator:hover {
+            background-color: #d97706;
+        }
+        .btn-equals {
+            background-color: #10b981;
+        }
+        .btn-equals:hover {
+            background-color: #059669;
+        }
+        .btn-clear {
+            background-color: #ef4444;
+        }
+        .btn-clear:hover {
+            background-color: #dc2626;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 min-h-screen flex items-center justify-center p-4">
+    <div class="bg-gray-800 rounded-2xl shadow-xl overflow-hidden w-full max-w-xs">
+        <!-- Display Screen -->
+        <div class="p-4 bg-gray-900 text-right">
+            <div id="previous-operation" class="text-gray-400 text-sm min-h-[20px]"></div>
+            <input type="text" class="w-full bg-transparent text-white text-3xl font-semibold text-right outline-none" >
+        </div>
+        
+        <!-- Calculator Buttons -->
+        <div class="p-4 grid grid-cols-4 gap-3">
+            <!-- First Row -->
+            <button class="btn-clear text-white font-bold py-4 rounded-lg text-xl transition-colors duration-200 col-span-" >C</button>
+            <button class="btn-clear text-white font-bold py-4 rounded-lg text-xl transition-colors duration-200 col-span-" >**</button>
+            <button class="btn-operator text-white font-bold py-4 rounded-lg text-xl transition-colors duration-200" >%</button>
+            <button class="btn-operator text-white font-bold py-4 rounded-lg text-xl transition-colors duration-200" >/</button>
+            
+            <!-- Second Row -->
+            <button class="bg-gray-700 text-white font-bold py-4 rounded-lg text-xl hover:bg-gray-600 transition-colors duration-200" >7</button>
+            <button class="bg-gray-700 text-white font-bold py-4 rounded-lg text-xl hover:bg-gray-600 transition-colors duration-200" >8</button>
+            <button class="bg-gray-700 text-white font-bold py-4 rounded-lg text-xl hover:bg-gray-600 transition-colors duration-200" >9</button>
+            <button class="btn-operator text-white font-bold py-4 rounded-lg text-xl transition-colors duration-200" >*</button>
+            
+            <!-- Third Row -->
+            <button class="bg-gray-700 text-white font-bold py-4 rounded-lg text-xl hover:bg-gray-600 transition-colors duration-200" >4</button>
+            <button class="bg-gray-700 text-white font-bold py-4 rounded-lg text-xl hover:bg-gray-600 transition-colors duration-200" >5</button>
+            <button class="bg-gray-700 text-white font-bold py-4 rounded-lg text-xl hover:bg-gray-600 transition-colors duration-200" >6</button>
+            <button class="btn-operator text-white font-bold py-4 rounded-lg text-xl transition-colors duration-200" >-</button>
+            
+            <!-- Fourth Row -->
+            <button class="bg-gray-700 text-white font-bold py-4 rounded-lg text-xl hover:bg-gray-600 transition-colors duration-200" >1</button>
+            <button class="bg-gray-700 text-white font-bold py-4 rounded-lg text-xl hover:bg-gray-600 transition-colors duration-200" >2</button>
+            <button class="bg-gray-700 text-white font-bold py-4 rounded-lg text-xl hover:bg-gray-600 transition-colors duration-200" >3</button>
+            <button class="btn-operator text-white font-bold py-4 rounded-lg text-xl transition-colors duration-200" >+</button>
+            
+            <!-- Fifth Row -->
+            <button class="bg-gray-700 text-white font-bold py-4 rounded-lg text-xl hover:bg-gray-600 transition-colors duration-200 col-span-2">0</button>
+            <button class="bg-gray-700 text-white font-bold py-4 rounded-lg text-xl hover:bg-gray-600 transition-colors duration-200" >.</button>
+            <button class="btn-equals text-white font-bold py-4 rounded-lg text-xl transition-colors duration-200" >=</button>
+        </div>
+    </div>
+
+    
+</body>
+<script src="index.js"></script>
+</html>
