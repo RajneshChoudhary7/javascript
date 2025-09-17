@@ -838,45 +838,116 @@
 
 //     console.log("Form Submit Event:");
 //     console.log("Name:", name);
-//     console.log("Email:", email);
-//     console.log("Password:", password);
+// //     console.log("Email:", email);
+// //     console.log("Password:", password);
+// // });
+
+// let formEl = document.querySelector("form"); 
+// let form2 = document.querySelector("#form2"); 
+
+// formEl.addEventListener("submit", (e) => {
+//     e.preventDefault();
+
+//     let data = {
+//         name: formEl[0].value,
+//         email: formEl[1].value,
+//         password: formEl[2].value
+//     };
+//     console.log("Signup data:", data);
+//     localStorage.setItem("formdata", JSON.stringify(data));
+//     alert("Signup Successful");
 // });
 
-let formEl = document.querySelector("form"); 
-let form2 = document.querySelector("#form2"); 
+// form2.addEventListener("submit", (e) => {
+//     e.preventDefault();
 
-formEl.addEventListener("submit", (e) => {
-    e.preventDefault();
+//     let saveData = localStorage.getItem("formdata");
+//     if (!saveData) {
+//         alert("Please signup first!");
+//         return;
+//     }
 
-    let data = {
-        name: formEl[0].value,
-        email: formEl[1].value,
-        password: formEl[2].value
-    };
-    console.log("Signup data:", data);
-    localStorage.setItem("formdata", JSON.stringify(data));
-    alert("Signup Successful");
-});
+//     let dataObj = JSON.parse(saveData);
 
-form2.addEventListener("submit", (e) => {
-    e.preventDefault();
+//     let loginObj = {
+//         email: form2[0].value,
+//         password: form2[1].value
+//     };
 
-    let saveData = localStorage.getItem("formdata");
-    if (!saveData) {
-        alert("Please signup first!");
-        return;
+//     if (dataObj.email === loginObj.email && dataObj.password === loginObj.password) {
+//         alert("Login Successful!");
+//     } else {
+//         alert("Invalid email or password.");
+//     }
+// });
+
+
+// function sum(num3) {
+// let num1 = 10;
+// let num2 = 30;
+// console.log(num1 + num2 + num3);
+// }
+// sum(10); 
+
+// let arr = [1,2,-3,4,-5,-3,5]
+// let max = arr[0]
+// let max2 = arr[1]
+// function fun (){
+//     for(let i = 1 ; i<arr.length;i++)
+//     {
+//         if(arr[i]>max)
+//         {
+//             max=arr[i]
+//         }
+//     }
+
+// }
+
+// let obj = {
+//     id:1,
+//     name:"Rajnesh",
+//     lastName:"Choudhary"
+// }
+
+// let {id,name,lastName}=obj
+// console.log(id)
+
+// let arr=[1,2,3,4,6,78]
+
+// let max = arr[5];
+// let data1 = arr.filter(function(a,b,c){
+//     return(a<max)
+// })
+// let data2 = data1.find(function(a,b,c){
+//     for(i of data1){
+       
+//     }
+//     return b
+// })
+// console.log(data1)
+// console.log(data2)
+
+let ul = document.querySelector("ul")
+fetch("https://jsonplaceholder.typicode.com/todos").then((data)=>{
+        return data.json()
+}).then((res)=>{
+    console.log(res)
+    show(res)
+})
+
+
+function show(res){
+    for(let i of res){
+        let li = document.createElement('li')
+        let h3 = document.createElement('h3')
+        li.innerText=i.id
+        h3.innerText=i.title
+        ul.append(li, h3)
+        console.log(i)
+
+
     }
+    
 
-    let dataObj = JSON.parse(saveData);
+}
 
-    let loginObj = {
-        email: form2[0].value,
-        password: form2[1].value
-    };
-
-    if (dataObj.email === loginObj.email && dataObj.password === loginObj.password) {
-        alert("Login Successful!");
-    } else {
-        alert("Invalid email or password.");
-    }
-});
