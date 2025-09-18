@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rajnesh Movies</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --primary-color: #0d6efd;
+            --dark-bg: #212529;
+            --dark-card: #2c3034;
+            --dark-text: #f8f9fa;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        body.dark-mode {
+            background-color: var(--dark-bg);
+            color: var(--dark-text);
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+
+        .search-section {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect fill="%230d6efd" width="100" height="100"/><path fill="%23000" opacity="0.2" d="M0 0L100 100M100 0L0 100"/></svg>');
+            background-size: cover;
+            padding: 3rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .movie-card {
+            transition: transform 0.3s, box-shadow 0.3s;
+            height: 100%;
+            border: none;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .movie-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .dark-mode .movie-card {
+            background-color: var(--dark-card);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+        }
+
+        .dark-mode .movie-card:hover {
+            box-shadow: 0 12px 16px rgba(0, 0, 0, 0.6);
+        }
+
+        .poster-placeholder {
+            background-color: #e9ecef;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6c757d;
+        }
+
+        .dark-mode .poster-placeholder {
+            background-color: #495057;
+            color: #adb5bd;
+        }
+
+        .card-title {
+            cursor: pointer;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .card-text {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .rating-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 1;
+        }
+
+        footer {
+            margin-top: auto;
+            padding: 1rem 0;
+        }
+
+        #loadingSpinner {
+            display: none;
+        }
+
+        #resultsContainer {
+            min-height: 300px;
+        }
+
+        /* Masonry-like grid layout */
+        .masonry-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        /* Modal styles */
+        .modal-poster {
+            width: 100%;
+            border-radius: 0.25rem;
+        }
+
+        .dark-mode .modal-content {
+            background-color: var(--dark-card);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="bi bi-camera-reels me-2"></i>Rajnesh Movies
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <button id="darkModeToggle" class="btn btn-outline-light">
+                            <i class="bi bi-moon-fill"></i>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Search Section -->
+    <section class="search-section text-white">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8 text-center">
+                    <h2 class="mb-4">Discover Your Next Favorite Movie</h2>
+                    <div class="input-group input-group-lg">
+                        <input type="text" id="searchInput" class="form-control" placeholder="Search movies or TV shows...">
+                        <button id="searchButton" class="btn btn-danger" type="button">
+                            <i class="bi bi-search"></i> Search
+                        </button>
+                    </div>
+                    <p class="mt-3">Try searching for: Avengers, Breaking Bad, Friends, etc.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container my-5">
+        <div id="loadingSpinner" class="text-center my-5">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="mt-2">Searching for movies...</p>
+        </div>
+
+        <div id="errorAlert" class="alert alert-danger d-none" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+            <span id="errorMessage"></span>
+        </div>
+
+        <div id="resultsContainer">
+            <div id="noResults" class="text-center d-none">
+                <i class="bi bi-inbox display-1 text-muted"></i>
+                <h3 class="mt-3">No results found</h3>
+                <p class="text-muted">Try a different search term</p>
+            </div>
+
+            <div id="movieGrid" class="masonry-grid"></div>
+        </div>
+    </main>
+
+    <!-- Movie Details Modal -->
+    <div class="modal fade" id="detailsModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitle">Movie Title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <img id="modalPoster" class="modal-poster" src="" alt="Movie poster">
+                        </div>
+                        <div class="col-md-8">
+                            <div id="modalRating" class="mb-2"></div>
+                            <div id="modalYear" class="mb-2"></div>
+                            <div id="modalGenres" class="mb-3"></div>
+                            <h6>Overview</h6>
+                            <p id="modalOverview"></p>
+                            <div id="modalSiteLink" class="mt-3"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <a id="modalWatchLink" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+                        <i class="bi bi-play-fill me-1"></i> Watch Now
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-4 mt-5">
+        <div class="container">
+            <p class="mb-0">&copy; 2023 Rajnesh Movies. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap & Axios JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        // =========================================================================
+        // CONFIGURATION - Update these values for your API of choice
+        // =========================================================================
+
+        // API Configuration - Choose one and comment out the others
+        const API_CONFIG = {
+            // TVMaze API (no key required)
+            tvmaze: {
+                baseUrl: 'https://api.tvmaze.com',
+                endpoints: {
+                    search: '/search/shows?q='
+                },
+                // Field mapping for TVMaze API
+                fieldMap: {
+                    title: 'show.name',
+                    image: 'show.image.medium',
+                    rating: 'show.rating.average',
+                    summary: 'show.summary',
+                    url: 'show.url',
+                    year: 'show.premiered',
+                    genres: 'show.genres',
+                    site: 'show.officialSite'
+                }
+            },
+            
+            // TMDB API (requires API key)
+            tmdb: {
+                baseUrl: 'https://api.themoviedb.org/3',
+                apiKey: 'YOUR_TMDB_API_KEY_HERE', // Replace with your TMDB API key
+                endpoints: {
+                    search: '/search/multi?api_key='
+                },
+                // Field mapping for TMDB API
+                fieldMap: {
+                    title: 'title || name',
+                    image: 'poster_path',
+                    rating: 'vote_average',
+                    summary: 'overview',
+                    url: 'https://www.themoviedb.org/' + (item => `${item.media_type}/${item.id}`),
+                    year: 'release_date || first_air_date',
+                    genres: 'genre_ids' // Note: You'll need to map genre IDs to names
+                },
+                imageBaseUrl: 'https://image.tmdb.org/t/p/w500'
+            },
+            
+            // OMDb API (requires API key)
+            omdb: {
+                baseUrl: 'https://www.omdbapi.com',
+                apiKey: 'YOUR_OMDB_API_KEY_HERE', // Replace with your OMDb API key
+                endpoints: {
+                    search: '/?apikey='
+                },
+                // Field mapping for OMDb API
+                fieldMap: {
+                    title: 'Title',
+                    image: 'Poster',
+                    rating: 'imdbRating',
+                    summary: 'Plot',
+                    url: 'https://www.imdb.com/title/' + (item => item.imdbID),
+                    year: 'Year',
+                    genres: 'Genre'
+                }
+            }
+        };
+
+        // Currently active API - change this to switch between APIs
+        const ACTIVE_API = 'tvmaze'; // Options: 'tvmaze', 'tmdb', 'omdb'
+
+        // =========================================================================
+        // END OF CONFIGURATION
+        // =========================================================================
+
+        // DOM elements
+        const searchInput = document.getElementById('searchInput');
+        const searchButton = document.getElementById('searchButton');
+        const movieGrid = document.getElementById('movieGrid');
+        const loadingSpinner = document.getElementById('loadingSpinner');
+        const noResults = document.getElementById('noResults');
+        const errorAlert = document.getElementById('errorAlert');
+        const errorMessage = document.getElementById('errorMessage');
+        const darkModeToggle = document.getElementById('darkModeToggle');
+
+        // Modal elements
+        const modalTitle = document.getElementById('modalTitle');
+        const modalPoster = document.getElementById('modalPoster');
+        const modalRating = document.getElementById('modalRating');
+        const modalYear = document.getElementById('modalYear');
+        const modalGenres = document.getElementById('modalGenres');
+        const modalOverview = document.getElementById('modalOverview');
+        const modalSiteLink = document.getElementById('modalSiteLink');
+        const modalWatchLink = document.getElementById('modalWatchLink');
+        const detailsModal = new bootstrap.Modal(document.getElementById('detailsModal'));
+
+        // Event listeners
+        searchButton.addEventListener('click', performSearch);
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') performSearch();
+        });
+        darkModeToggle.addEventListener('click', toggleDarkMode);
+
+        // Check for saved dark mode preference
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            document.body.classList.add('dark-mode');
+            darkModeToggle.innerHTML = '<i class="bi bi-sun-fill"></i>';
+        }
+
+        // Function to perform search
+        function performSearch() {
+            const searchText = searchInput.value.trim();
+            
+            if (searchText.length === 0) {
+                showError('Please enter a search term');
+                return;
+            }
+            
+            // Clear previous results
+            movieGrid.innerHTML = '';
+            noResults.classList.add('d-none');
+            errorAlert.classList.add('d-none');
+            
+            // Show loading spinner
+            loadingSpinner.style.display = 'block';
+            
+            // Build API URL based on selected configuration
+            const apiConfig = API_CONFIG[ACTIVE_API];
+            let apiUrl = '';
+            
+            if (ACTIVE_API === 'tvmaze') {
+                apiUrl = `${apiConfig.baseUrl}${apiConfig.endpoints.search}${encodeURIComponent(searchText)}`;
+            } else if (ACTIVE_API === 'tmdb') {
+                apiUrl = `${apiConfig.baseUrl}${apiConfig.endpoints.search}${apiConfig.apiKey}&query=${encodeURIComponent(searchText)}`;
+            } else if (ACTIVE_API === 'omdb') {
+                apiUrl = `${apiConfig.baseUrl}${apiConfig.endpoints.search}${apiConfig.apiKey}&s=${encodeURIComponent(searchText)}`;
+            }
+            
+            // Make API request
+            axios.get(apiUrl)
+                .then(response => {
+                    loadingSpinner.style.display = 'none';
+                    
+                    let results = [];
+                    if (ACTIVE_API === 'tvmaze') {
+                        results = response.data;
+                    } else if (ACTIVE_API === 'tmdb') {
+                        results = response.data.results || [];
+                    } else if (ACTIVE_API === 'omdb') {
+                        results = response.data.Search || [];
+                    }
+                    
+                    if (results.length === 0) {
+                        noResults.classList.remove('d-none');
+                        return;
+                    }
+                    
+                    displayResults(results);
+                })
+                .catch(error => {
+                    loadingSpinner.style.display = 'none';
+                    console.error('Error fetching data:', error);
+                    showError('Failed to fetch results. Please try again later.');
+                });
+        }
+
+        // Function to display results
+        function displayResults(results) {
+            movieGrid.innerHTML = '';
+            
+            results.forEach(item => {
+                // Extract data based on field mapping
+                const title = getNestedValue(item, API_CONFIG[ACTIVE_API].fieldMap.title) || 'Unknown Title';
+                let imageUrl = getNestedValue(item, API_CONFIG[ACTIVE_API].fieldMap.image);
+                const rating = getNestedValue(item, API_CONFIG[ACTIVE_API].fieldMap.rating) || 'N/A';
+                const summary = extractTextFromHTML(getNestedValue(item, API_CONFIG[ACTIVE_API].fieldMap.summary) || 'No description available.');
+                let url = getNestedValue(item, API_CONFIG[ACTIVE_API].fieldMap.url);
+                
+                // Special handling for TMDB images
+                if (ACTIVE_API === 'tmdb' && imageUrl) {
+                    imageUrl = `${API_CONFIG[ACTIVE_API].imageBaseUrl}${imageUrl}`;
+                }
+                
+                // Special handling for function-based URL generation (TMDB)
+                if (typeof API_CONFIG[ACTIVE_API].fieldMap.url === 'function') {
+                    url = API_CONFIG[ACTIVE_API].fieldMap.url(item);
+                }
+                
+                // Create movie card
+                const col = document.createElement('div');
+                col.className = 'col';
+                
+                col.innerHTML = `
+                    <div class="card movie-card">
+                        ${imageUrl ? 
+                            `<img src="${imageUrl}" class="card-img-top" alt="${title} poster" loading="lazy">` : 
+                            `<div class="poster-placeholder">
+                                <i class="bi bi-image" style="font-size: 3rem;"></i>
+                            </div>`
+                        }
+                        <span class="rating-badge badge bg-warning text-dark">
+                            <i class="bi bi-star-fill me-1"></i>${rating}
+                        </span>
+                        <div class="card-body">
+                            <h5 class="card-title" data-url="${url}">${title}</h5>
+                            <p class="card-text">${summary.substring(0, 140)}${summary.length > 140 ? '...' : ''}</p>
+                            <div class="d-flex justify-content-between">
+                                <a href="${url}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-primary">
+                                    <i class="bi bi-play-fill me-1"></i> Watch
+                                </a>
+                                <button class="btn btn-sm btn-outline-secondary details-btn" 
+                                        data-title="${title}"
+                                        data-image="${imageUrl || ''}"
+                                        data-rating="${rating}"
+                                        data-year="${getNestedValue(item, API_CONFIG[ACTIVE_API].fieldMap.year) || 'N/A'}"
+                                        data-genres="${getNestedValue(item, API_CONFIG[ACTIVE_API].fieldMap.genres) || 'N/A'}"
+                                        data-summary="${summary}"
+                                        data-url="${url}"
+                                        data-site="${getNestedValue(item, API_CONFIG[ACTIVE_API].fieldMap.site) || ''}">
+                                    <i class="bi bi-info-circle me-1"></i> Details
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                movieGrid.appendChild(col);
+            });
+            
+            // Add event listeners to title and details buttons
+            document.querySelectorAll('.card-title').forEach(title => {
+                title.addEventListener('click', () => {
+                    window.open(title.getAttribute('data-url'), '_blank', 'noopener,noreferrer');
+                });
+            });
+            
+            document.querySelectorAll('.details-btn').forEach(btn => {
+                btn.addEventListener('click', openDetailsModal);
+            });
+        }
+
+        // Function to open details modal
+        function openDetailsModal(e) {
+            const button = e.currentTarget;
+            
+            modalTitle.textContent = button.getAttribute('data-title');
+            
+            const imageUrl = button.getAttribute('data-image');
+            if (imageUrl) {
+                modalPoster.src = imageUrl;
+                modalPoster.alt = `${button.getAttribute('data-title')} poster`;
+            } else {
+                modalPoster.src = '';
+                modalPoster.alt = 'No poster available';
+            }
+            
+            modalRating.innerHTML = `<strong>Rating:</strong> ${button.getAttribute('data-rating')}`;
+            modalYear.innerHTML = `<strong>Year:</strong> ${button.getAttribute('data-year')}`;
+            
+            const genres = button.getAttribute('data-genres');
+            if (genres !== 'N/A') {
+                // Handle different API genre formats (array vs string)
+                let genresText = '';
+                if (genres.startsWith('[')) {
+                    // It's an array (needs parsing)
+                    try {
+                        const genresArray = JSON.parse(genres.replace(/'/g, '"'));
+                        genresText = genresArray.join(', ');
+                    } catch (e) {
+                        genresText = genres;
+                    }
+                } else {
+                    genresText = genres;
+                }
+                modalGenres.innerHTML = `<strong>Genres:</strong> ${genresText}`;
+            } else {
+                modalGenres.innerHTML = '';
+            }
+            
+            modalOverview.textContent = button.getAttribute('data-summary');
+            
+            const siteUrl = button.getAttribute('data-site');
+            if (siteUrl && siteUrl !== 'N/A') {
+                modalSiteLink.innerHTML = `<strong>Official Site:</strong> <a href="${siteUrl}" target="_blank" rel="noopener noreferrer">${siteUrl}</a>`;
+            } else {
+                modalSiteLink.innerHTML = '';
+            }
+            
+            modalWatchLink.href = button.getAttribute('data-url');
+            
+            detailsModal.show();
+        }
+
+        // Function to toggle dark mode
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            
+            if (document.body.classList.contains('dark-mode')) {
+                localStorage.setItem('darkMode', 'enabled');
+                darkModeToggle.innerHTML = '<i class="bi bi-sun-fill"></i>';
+            } else {
+                localStorage.setItem('darkMode', 'disabled');
+                darkModeToggle.innerHTML = '<i class="bi bi-moon-fill"></i>';
+            }
+        }
+
+        // Function to show error message
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorAlert.classList.remove('d-none');
+        }
+
+        // Helper function to get nested object values using dot notation
+        function getNestedValue(obj, path) {
+            if (typeof path === 'function') {
+                return path(obj);
+            }
+            
+            if (!path) return undefined;
+            
+            try {
+                return path.split('.').reduce((acc, part) => acc && acc[part], obj);
+            } catch (e) {
+                return undefined;
+            }
+        }
+
+        // Helper function to extract text from HTML
+        function extractTextFromHTML(html) {
+            if (!html) return '';
+            const div = document.createElement('div');
+            div.innerHTML = html;
+            return div.textContent || div.innerText || '';
+        }
+    </script>
+</body>
+</html>
