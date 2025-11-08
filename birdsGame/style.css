@@ -1,0 +1,87 @@
+.main{
+    font-family: 'Times New Roman', Times, serif;
+    background-image: url("https://wallpapers.com/images/hd/cartoon-forest-background-1920-x-1067-wzloannmzyum0w78.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    height: 100vh;
+    display: flex;
+    
+}
+
+h1 {
+    color: black;
+    text-align: center;
+    font-size: 3em;
+    justify-content: center;
+    margin-left: 400px;
+}
+
+.food {
+    height: 100px;
+    width: 100px;
+    background-image: url("https://img.freepik.com/premium-psd/3d-cartoon-biryani-bowl-with-chicken-transparent-background_1164087-5278.jpg?w=360");
+    margin-top: 500px;
+    margin-left: 170px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: absolute;
+    border-radius: 50%;
+}
+
+.bird {
+    height: 200px;
+    width: 200px;
+    background-image: url("https://i.pinimg.com/originals/5d/e3/03/5de303950e41d173820c0b6cebae7359.gif");
+    margin-top: 200px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: absolute;
+    right: 0px;
+
+    /* animation: fly 3s infinite linear; */
+
+    transform: translateX(0);
+    animation: fly 10s  ease-in-out infinite;
+}
+
+@keyframes fly {
+    0% {
+        right: 0px;
+        top: 00px;
+    }
+    25% {
+        right: 580px;
+        top: 100px;
+    }
+    40% {
+        right: 1000px;
+        top: 200px; /* drop down */
+        transform: rotate(-90deg);
+    }
+    50% {
+        right: 1000px;
+        top: 200px; /* pause to eat */
+        transform: rotate(90deg) 
+    }
+    
+    65% {
+        right: 1000px;
+        top: 00px; /* fly back up */
+        transform: rotateY(90deg)
+        
+    }
+
+    85% {
+        right: 1000px;
+        top: 00px; /* fly back up */
+        transform: rotateY(180deg)
+    }
+    100% {
+        right: 0px;
+        top: 00px; /* return to start */
+        transform: rotateY(180deg)
+    }
+
+
+}
